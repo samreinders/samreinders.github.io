@@ -1,0 +1,79 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PubList from '../../components/PubList.astro';
+import { site } from '../../site';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const pubs = await getCollection('publications', (p) => p.data.projects.includes(project.id));
+---
+
+<Base title={project.data.title} description={project.data.summary}>
+  <header class="page-header wrap">
+    <p class="breadcrumb"><a href="/">{site.name}</a></p>
+    <h1>{project.data.title}</h1>
+    <p class="lede">{project.data.summary}</p>
+    <dl class="facts">
+      <div><dt>Period</dt><dd>{project.data.period}</dd></div>
+      {project.data.role && <div><dt>My role</dt><dd>{project.data.role}</dd></div>}
+      {project.data.funding && <div><dt>Funding</dt><dd>{project.data.funding}</dd></div>}
+      {
+        project.data.links.length > 0 && (
+          <div>
+            <dt>{project.data.links.length > 1 ? 'Links' : 'Link'}</dt>
+            {project.data.links.map((link) => (
+              <dd><a href={link.url}>{link.label}</a></dd>
+            ))}
+          </div>
+        )
+      }
+    </dl>
+  </header>
+
+  <main id="main">
+    {
+      project.data.image && (
+        <figure class="hero wrap-wide">
+          <div class="figure-frame">
+            <Image src={project.data.image} alt={project.data.imageAlt ?? ''} widths={[800, 1400, 2000]} sizes="(min-width: 66rem) 64rem, 100vw" loading="eager" />
+          </div>
+          {project.data.imageCaption && <figcaption>{project.data.imageCaption}</figcaption>}
+        </figure>
+      )
+    }
+
+    <div class="wrap">
+      <div class="prose">
+        <Content />
+      </div>
+
+      {
+        pubs.length > 0 && (
+          <section aria-labelledby="pubs-h">
+            <h2 id="pubs-h">Publications</h2>
+            <PubList pubs={pubs} />
+          </section>
+        )
+      }
+
+      {
+        project.data.people.length > 0 && (
+          <section aria-labelledby="people-h">
+            <h2 id="people-h">People</h2>
+            <p class="muted">At Monash University unless noted.</p>
+            <ul class="people">
+              {project.data.people.map((person) => <li>{person}</li>)}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+  </main>
+</Base>

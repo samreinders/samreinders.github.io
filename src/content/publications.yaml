@@ -1,0 +1,127 @@
+# Publications, newest first. Each entry needs a unique id.
+#
+# Fields:
+#   title, authors, venue, year  (required)
+#   short     short venue name used in the Awards list, e.g. ACM CHI 2025
+#   type      Paper (default) | Short paper | Poster | Article
+#   status    e.g. "To appear"
+#   award     shown as a badge, and listed under Awards on the home page
+#   doi       without the https://doi.org/ prefix (use the arXiv DOI, 10.48550/arXiv.<id>, if there's no publisher DOI)
+#   arxiv     arXiv id, used for the PDF link
+#   pdf       a PDF URL (overrides the arXiv link)
+#   projects  project ids (file names in src/content/projects) this paper belongs to
+
+- id: vis26-graphy
+  title: 'Conversational Tactile Data Interfaces: Co-Designing Accessible Data Experiences with Blind Users Using Refreshable Tactile Displays and Conversational AI'
+  authors: [Samuel Reinders, Munazza Zaib, Bongshin Lee, Ingrid Zukerman, Matthew Butler, Thien Autran, Sascha Cowley, Francois Jacobs, Lizhen Qu, Kim Marriott]
+  venue: IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2026)
+  short: IEEE VIS 2026
+  year: 2026
+  status: To appear
+  award: Best Paper Honorable Mention
+  arxiv: '2607.14588'
+  projects: [tactile-data]
+
+- id: pacificvis26-architecture
+  title: 'Supporting Multimodal Data Interaction on Refreshable Tactile Displays: An Architecture to Combine Touch and Conversational AI'
+  authors: [Samuel Reinders, Munazza Zaib, Matthew Butler, Bongshin Lee, Ingrid Zukerman, Lizhen Qu, Kim Marriott]
+  venue: IEEE Pacific Visualization Conference (PacificVis 2026), VisNotes track
+  short: IEEE PacificVis 2026 (VisNotes)
+  year: 2026
+  type: Short paper
+  award: Best Paper Award
+  doi: 10.1109/PacificVis68791.2026.00013
+  arxiv: '2602.15280'
+  projects: [tactile-data]
+
+- id: chi25-embodiment
+  title: '“It Brought the Model to Life”: Exploring the Embodiment of Multimodal I3Ms for People who are Blind or have Low Vision'
+  authors: [Samuel Reinders, Matthew Butler, Kim Marriott]
+  venue: ACM CHI Conference on Human Factors in Computing Systems (CHI 2025)
+  short: ACM CHI 2025
+  year: 2025
+  award: Best Paper Award
+  doi: 10.1145/3706598.3713158
+  arxiv: '2502.14163'
+  projects: [interactive-3d-models]
+
+- id: vis24-rtd-agents
+  title: 'When Refreshable Tactile Displays Meet Conversational Agents: Investigating Accessible Data Presentation and Analysis with Touch and Speech'
+  authors: [Samuel Reinders, Matthew Butler, Ingrid Zukerman, Bongshin Lee, Lizhen Qu, Kim Marriott]
+  venue: IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2024)
+  short: IEEE VIS 2024
+  year: 2024
+  award: Best Paper Honorable Mention
+  doi: 10.1109/TVCG.2024.3456358
+  arxiv: '2408.04806'
+  projects: [tactile-data]
+
+- id: vis24-workshop
+  title: Accessible Data Access and Analysis by People who are Blind or Have Low Vision
+  authors: [Samuel Reinders, Munazza Zaib, Matthew Butler, Bongshin Lee, Ingrid Zukerman, Lizhen Qu, Kim Marriott]
+  venue: 1st Workshop on Accessible Data Visualization, IEEE VIS 2024
+  short: IEEE VIS 2024 Workshop
+  year: 2024
+  type: Poster
+  doi: 10.48550/arXiv.2506.23443
+  arxiv: '2506.23443'
+  projects: [tactile-data]
+
+- id: vis23-poster
+  title: Refreshable Tactile Displays for Accessible Data Visualisation
+  authors: [Leona Holloway, Peter Cracknell, Kate Stephens, Melissa Fanshawe, Samuel Reinders, Kim Marriott, Matthew Butler]
+  venue: IEEE VIS 2023
+  short: IEEE VIS 2023
+  year: 2023
+  type: Poster
+  award: Best Poster Honorable Mention
+  doi: 10.48550/arXiv.2401.15836
+  arxiv: '2401.15836'
+  projects: [tactile-data]
+
+- id: dis23-solar
+  title: Designing Conversational Multimodal 3D Printed Models with People who are Blind
+  authors: [Samuel Reinders, Swamy Ananthanarayan, Matthew Butler, Kim Marriott]
+  venue: ACM Designing Interactive Systems Conference (DIS 2023)
+  short: ACM DIS 2023
+  year: 2023
+  doi: 10.1145/3563657.3595989
+  arxiv: '2306.06811'
+  projects: [interactive-3d-models]
+
+- id: chi21-review
+  title: 'Technology Developments in Touch-Based Accessible Graphics: A Systematic Review of Research 2010-2020'
+  authors: [Matthew Butler, Leona Holloway, Samuel Reinders, Cagatay Goncu, Kim Marriott]
+  venue: ACM CHI Conference on Human Factors in Computing Systems (CHI 2021)
+  short: ACM CHI 2021
+  year: 2021
+  doi: 10.1145/3411764.3445207
+  arxiv: '2102.01273'
+
+- id: chi20-hey-model
+  title: '“Hey Model!” - Natural User Interactions and Agency in Accessible Interactive 3D Models'
+  authors: [Samuel Reinders, Matthew Butler, Kim Marriott]
+  venue: ACM CHI Conference on Human Factors in Computing Systems (CHI 2020)
+  short: ACM CHI 2020
+  year: 2020
+  doi: 10.1145/3313831.3376145
+  arxiv: '2009.00224'
+  projects: [interactive-3d-models]
+
+- id: assets20-covid
+  title: Non-visual Access to Graphical Information on COVID-19
+  authors: [Leona Holloway, Matthew Butler, Samuel Reinders, Kim Marriott]
+  venue: ACM SIGACCESS Conference on Computers and Accessibility (ASSETS 2020)
+  short: ACM ASSETS 2020
+  year: 2020
+  type: Poster
+  doi: 10.1145/3373625.3418015
+
+- id: assets19-maps
+  title: '3D Printed Maps and Icons for Inclusion: Testing in the Wild by People who are Blind or have Low Vision'
+  authors: [Leona Holloway, Kim Marriott, Matthew Butler, Samuel Reinders]
+  venue: ACM SIGACCESS Conference on Computers and Accessibility (ASSETS 2019)
+  short: ACM ASSETS 2019
+  year: 2019
+  doi: 10.1145/3308561.3353790
+  arxiv: '2501.09204'

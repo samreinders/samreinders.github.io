@@ -1,0 +1,45 @@
+---
+// Stand-in for the profile photo: initials drawn in raised pins on a round pin grid,
+// like a refreshable tactile display. Decorative, so hidden from assistive tech.
+
+// 5x7 dot-matrix letters; '#' is a raised pin.
+const GLYPHS: Record<string, string[]> = {
+  S: ['.###.', '#...#', '#....', '.###.', '....#', '#...#', '.###.'],
+  R: ['####.', '#...#', '#...#', '####.', '#.#..', '#..#.', '#...#'],
+};
+
+interface Props {
+  initials: string;
+}
+
+const letters = [...Astro.props.initials.toUpperCase()].map((ch) => GLYPHS[ch]).filter(Boolean);
+const textCols = letters.length * 6 - 1; // one blank column between letters
+
+const N = 13; // pins per side
+const PITCH = 7;
+const OFFSET = 50 - ((N - 1) * PITCH) / 2;
+const firstCol = Math.floor((N - textCols) / 2);
+const firstRow = Math.floor((N - 7) / 2);
+
+function raised(col: number, row: number) {
+  const c = col - firstCol;
+  const r = row - firstRow;
+  if (c < 0 || c >= textCols || r < 0 || r >= 7 || c % 6 === 5) return false;
+  return letters[Math.floor(c / 6)][r][c % 6] === '#';
+}
+
+const pins = [];
+for (let row = 0; row < N; row++) {
+  for (let col = 0; col < N; col++) {
+    const cx = OFFSET + col * PITCH;
+    const cy = OFFSET + row * PITCH;
+    if (Math.hypot(cx - 50, cy - 50) > 44) continue;
+    pins.push({ cx, cy, up: raised(col, row) });
+  }
+}
+---
+
+<svg class="pin-portrait" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+  <circle cx="50" cy="50" r="49.5" class="pin-portrait-bg" />
+  {pins.map((p) => <circle cx={p.cx} cy={p.cy} r={p.up ? 2.6 : 1.3} class={p.up ? 'pin-up' : 'pin-down'} />)}
+</svg>

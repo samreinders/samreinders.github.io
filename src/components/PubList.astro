@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { site } from '../site';
+import { authorSeparator } from '../lib/format';
+import { comparePubs } from '../lib/pubs';
+
+interface Props {
+  pubs: CollectionEntry<'publications'>[];
+  // Group under year headings at this level; omit for a flat list.
+  yearHeadingLevel?: 3 | 4;
+}
+
+const { pubs, yearHeadingLevel } = Astro.props;
+const YearHeading = `h${yearHeadingLevel ?? 3}`;
+const sorted = [...pubs].sort(comparePubs);
+const groups = yearHeadingLevel
+  ? [...new Set(sorted.map((p) => p.data.year))].map((year) => ({ year, items: sorted.filter((p) => p.data.year === year) }))
+  : [{ year: null, items: sorted }];
+
+function links({ data }: CollectionEntry<'publications'>) {
+  const pdf = data.pdf ?? (data.arxiv ? `https://arxiv.org/pdf/${data.arxiv}` : undefined);
+  return [
+    pdf && { label: 'PDF', url: pdf },
+    data.doi && { label: 'DOI', url: `https://doi.org/${data.doi}` },
+  ].filter((l): l is { label: string; url: string } => Boolean(l));
+}
+---
+
+{
+  groups.map(({ year, items }) => (
+    <Fragment>
+      {year && <YearHeading class="pub-year">{year}</YearHeading>}
+      <ul class="pubs" role="list">
+        {items.map((pub) => (
+          <li class="pub">
+            <p class="pub-title">{pub.data.title}</p>
+            <p class="pub-authors">
+              {pub.data.authors.map((author, i) => (
+                <Fragment>
+                  {author === site.authorName ? <strong>{author}</strong> : author}
+                  {authorSeparator(i, pub.data.authors.length)}
+                </Fragment>
+              ))}
+            </p>
+            <p class="pub-venue">
+              {pub.data.type !== 'Paper' && <span class="pub-type">{pub.data.type}</span>}
+              {pub.data.venue}
+              {pub.data.status && <span class="pub-status">{pub.data.status}</span>}
+            </p>
+            {pub.data.award && (
+              <p class="award">
+                <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path d="M8 1.2l2 4.2 4.6.6-3.4 3.2.9 4.6L8 11.6l-4.1 2.2.9-4.6L1.4 6l4.6-.6z" />
+                </svg>
+                {pub.data.award}
+              </p>
+            )}
+            <ul class="pub-links" role="list">
+              {links(pub).map((link) => (
+                <li>
+                  <a href={link.url}>{link.label}<span class="sr-only">: {pub.data.title}</span></a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </Fragment>
+  ))
+}

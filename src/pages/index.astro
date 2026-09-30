@@ -1,0 +1,195 @@
+---
+import { getCollection } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Braille from '../components/Braille.astro';
+import PinPortrait from '../components/PinPortrait.astro';
+import PubList from '../components/PubList.astro';
+import { Content as About } from '../content/about.md';
+import { site, teaching, service, reviewing } from '../site';
+import { formatMonth, inlineMarkdown } from '../lib/format';
+import { photo } from '../lib/photo';
+import { comparePubs } from '../lib/pubs';
+
+const pubs = (await getCollection('publications')).sort(comparePubs);
+const news = (await getCollection('news')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const awards = pubs.filter((p) => p.data.award);
+const initials = site.name
+  .split(' ')
+  .map((word) => word[0])
+  .join('');
+// Link-preview image: square, and never upscaled beyond the original photo.
+const shareSize = photo && Math.min(600, photo.width, photo.height);
+const shareImage = photo && (await getImage({ src: photo, width: shareSize!, height: shareSize!, format: 'jpg' }));
+
+const sections = [
+  ['about', 'About'],
+  ['news', 'News'],
+  ['research', 'Research'],
+  ['publications', 'Publications'],
+  ['awards', 'Awards'],
+  ['teaching', 'Teaching'],
+  ['service', 'Service'],
+];
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  affiliation: { '@type': 'Organization', name: site.institution },
+  email: `mailto:${site.email}`,
+  url: Astro.site?.href,
+  sameAs: site.links.map((l) => l.url),
+};
+---
+
+<Base image={shareImage?.src}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(person)} />
+
+  <header class="intro wrap">
+    <div class="intro-top">
+      <div>
+        <Braille text="⠠⠎⠁⠍ ⠠⠗⠑⠔⠙⠻⠎" class="braille-name" />
+        <h1>{site.name}</h1>
+        <p class="role">
+          {site.role}<br />
+          {site.department}<br />
+          {site.institution}, {site.location}
+        </p>
+      </div>
+      <div class="portrait">
+        {
+          photo ? (
+            <Image src={photo} alt={site.photoAlt} widths={[160, 320, 480]} sizes="10rem" loading="eager" />
+          ) : (
+            <PinPortrait initials={initials} />
+          )
+        }
+      </div>
+    </div>
+    {site.headerNote && <p class="header-note" set:html={inlineMarkdown(site.headerNote)} />}
+    <ul class="contact" role="list">
+      <li><a href={`mailto:${site.email}`}>Email</a></li>
+      {site.links.map((l) => <li><a href={l.url}>{l.label}</a></li>)}
+    </ul>
+    <nav aria-label="On this page">
+      <ul role="list">
+        {sections.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="wrap">
+    <section id="about" aria-labelledby="about-h">
+      <h2 id="about-h">About</h2>
+      <div class="prose"><About /></div>
+    </section>
+
+    <section id="news" aria-labelledby="news-h">
+      <h2 id="news-h">News</h2>
+      <ul class="news" role="list">
+        {
+          news.map((item) => (
+            <li>
+              <time datetime={item.data.date}>{formatMonth(item.data.date)}</time>
+              <p set:html={inlineMarkdown(item.data.text)} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="research" aria-labelledby="research-h">
+      <h2 id="research-h">Research</h2>
+      <ul class="projects" role="list">
+        {
+          projects.map((project) => (
+            <li class="project-card">
+              {(project.data.thumb ?? project.data.image) && (
+                <div class="figure-frame">
+                  <Image
+                    src={(project.data.thumb ?? project.data.image)!}
+                    alt=""
+                    widths={[320, 480, 720]}
+                    sizes="(min-width: 34rem) 14rem, 100vw"
+                  />
+                </div>
+              )}
+              <div class="project-card-body">
+                <h3>
+                  <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+                </h3>
+                <p>{project.data.summary}</p>
+                <p class="meta">{project.data.period}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="publications" aria-labelledby="publications-h">
+      <h2 id="publications-h">Publications</h2>
+      <PubList pubs={pubs} yearHeadingLevel={3} />
+    </section>
+
+    <section id="awards" aria-labelledby="awards-h">
+      <h2 id="awards-h">Awards</h2>
+      <ul class="dated" role="list">
+        {
+          awards.map((pub) => (
+            <li>
+              <span class="date">{pub.data.year}</span>
+              <p>
+                <strong>{pub.data.award}</strong>, {pub.data.short}
+                <br />
+                <span class="muted">{pub.data.title}</span>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="teaching" aria-labelledby="teaching-h">
+      <h2 id="teaching-h">Teaching</h2>
+      <p>{teaching.role}</p>
+      <ul class="dated" role="list">
+        {
+          teaching.units.map((unit) => (
+            <li>
+              <span class="date">{unit.years}</span>
+              <p>
+                <strong>{unit.code}</strong> {unit.name}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="service" aria-labelledby="service-h">
+      <h2 id="service-h">Service</h2>
+      <ul class="dated" role="list">
+        {
+          service.map((item) => (
+            <li>
+              <span class="date">{item.year}</span>
+              <p>
+                <strong>{item.role}</strong>, {item.venue}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+      <h3 class="subhead">Reviewing</h3>
+      <ul class="dated" role="list">
+        <li><span class="label">Conferences</span><p>{reviewing.conferences}</p></li>
+        <li><span class="label">Journals</span><p>{reviewing.journals}</p></li>
+      </ul>
+    </section>
+
+  </main>
+</Base>

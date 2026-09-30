@@ -1,0 +1,22 @@
+# News, newest first. date is YYYY-MM. text supports [links](https://...) and **bold**.
+# Link paper descriptions to a free version of the paper (arXiv, or the DOI if it's open access).
+
+- id: vis26
+  date: '2026-09'
+  text: Our paper presenting [Graphy](https://arxiv.org/abs/2607.14588), a conversational tactile data interface developed with three blind co-designers, has been accepted to IEEE VIS 2026 and received a **Best Paper Honorable Mention**.
+
+- id: pacificvis26-award
+  date: '2026-04'
+  text: Our VisNotes paper on [combining touch and conversational AI on refreshable tactile displays](https://arxiv.org/abs/2602.15280) received a **Best Paper Award** at IEEE PacificVis 2026.
+
+- id: maths-start
+  date: '2025-09'
+  text: I’ve begun work on an ARC Linkage Project on [accessible mathematics](https://www.accessiblemaths.org) for students who are blind or have low vision.
+
+- id: chi25-award
+  date: '2025-04'
+  text: Our paper [“It Brought the Model to Life”](https://doi.org/10.1145/3706598.3713158), on embodied interactive 3D printed models, received a **Best Paper Award** at ACM CHI 2025.
+
+- id: vis24-award
+  date: '2024-10'
+  text: Our [Wizard-of-Oz study combining refreshable tactile displays with conversational agents](https://arxiv.org/abs/2408.04806) received a **Best Paper Honorable Mention** at IEEE VIS 2024.

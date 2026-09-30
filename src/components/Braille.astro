@@ -1,0 +1,27 @@
+---
+// Draws Unicode braille as a strip of pins, like a refreshable tactile display:
+// raised dots are solid, lowered dots are faint. Decorative, so hidden from assistive tech.
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className } = Astro.props;
+
+const PITCH = 2.5; // distance between dots within a cell
+const CELL = 6; // distance between cells
+const pins = [...text].flatMap((ch, cell) => {
+  const bits = ch === ' ' ? 0 : ch.codePointAt(0)! - 0x2800;
+  // Dots 1-3 run down the left column, 4-6 down the right.
+  return [0, 1, 2, 3, 4, 5].map((dot) => ({
+    cx: cell * CELL + (dot < 3 ? 0 : PITCH) + 1.5,
+    cy: (dot % 3) * PITCH + 1.5,
+    raised: (bits >> dot) & 1,
+  }));
+});
+const width = [...text].length * CELL - (CELL - PITCH - 3);
+---
+
+<svg class={className} viewBox={`0 0 ${width} ${2 * PITCH + 3}`} aria-hidden="true" focusable="false">
+  {pins.map((p) => <circle cx={p.cx} cy={p.cy} r={p.raised ? 0.95 : 0.55} class={p.raised ? 'pin-up' : 'pin-down'} />)}
+</svg>
