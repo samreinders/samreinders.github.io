@@ -45,7 +45,7 @@ const person = {
 };
 ---
 
-<Base image={shareImage?.src}>
+<Base image={shareImage?.src} imageAlt={site.photoAlt}>
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(person)} />
 
   <header class="intro wrap">

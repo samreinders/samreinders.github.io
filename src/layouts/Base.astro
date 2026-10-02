@@ -9,9 +9,12 @@ interface Props {
   description?: string;
   // Image for link previews (Open Graph), as a site-relative URL.
   image?: string;
+  imageAlt?: string;
+  // 'summary' suits a square image (the photo); 'summary_large_image' suits wide figures.
+  card?: 'summary' | 'summary_large_image';
 }
 
-const { title, description = site.description, image } = Astro.props;
+const { title, description = site.description, image, imageAlt, card = 'summary' } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -31,6 +34,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    {image && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+    {image && <meta name="twitter:card" content={card} />}
     <slot name="head" />
   </head>
   <body>

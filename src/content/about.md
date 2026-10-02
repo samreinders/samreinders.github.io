@@ -1,5 +1,7 @@
-I'm a Postdoctoral Research Fellow in the Department of Human-Centred Computing at Monash University in Melbourne, Australia. I work in human-computer interaction and accessibility, designing multimodal interfaces with and for people who are blind or have low vision (BLV).
+I'm a Postdoctoral Research Fellow at Monash University in Melbourne, Australia, where I'm part of the Inclusive Technologies group in the Department of Human-Centred Computing. I work in human-computer interaction and accessibility, designing multimodal interfaces with and for people who are blind or have low vision (BLV).
 
 I lead the technical development of [Accessible Maths](/projects/accessible-maths/), an ARC Linkage Project building an accessible digital workbook for BLV maths students. My research also combines [refreshable tactile displays with conversational AI](/projects/tactile-data/) so that BLV people can explore, question and verify data by touch and speech. My PhD, conferred in 2024, investigated [interactive 3D printed models](/projects/interactive-3d-models/) that talk, listen and respond to touch. Much of this work is built through co-design with blind collaborators.
 
-I also teach usability, interface design and making at Monash, and I'm a member of the Monash Assistive Technology and Society (MATS) Centre, where I help run social media.
+I also teach usability, interface design and making at Monash, and I'm a member of the Monash Assistive Technology and Society (MATS) Centre, where I help run social media. Outside the university, I consult on accessible AI, helping organisations design and evaluate AI tools with and for people with disability.
+
+Before academia, I worked as a software engineer, and I still enjoy programming, hardware prototyping and 3D printing. Away from work, I enjoy watching my football team and swimming laps at the pool.

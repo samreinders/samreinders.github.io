@@ -12,7 +12,7 @@ links:
   - label: accessiblemaths.org
     url: https://www.accessiblemaths.org
   - label: Source code on GitHub
-    url: https://github.com/accessible-maths
+    url: https://github.com/accessible-maths/accessible-maths
 ---
 
 In our survey of senior secondary maths students who are blind or have low vision (BLV), reading equations stood out as the most significant challenge. This project is building an accessible digital workbook that lets BLV students work with and share mathematics, calculations and graphics, together with their teachers and classmates. I lead the technical development.
